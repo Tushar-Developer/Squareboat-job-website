@@ -140,6 +140,7 @@ const useStyles = makeStyles((theme) => ({
     
         if (verified) {
           axios.post(apiList.signup, updatedDetails).then((response) => {
+            console.log('response --',response);
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("type", response.data.type);
               setLoggedin(isAuth());

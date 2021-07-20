@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-
+const jwt = require("jsonwebtoken");
 const authKeys = require("../lib/authKeys");
 
 const User = require("../db/User");
@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.post("/signUp", (request, response) => {
     const data = request.body;
+    console.log('data -- ',data);
     
     if (data) {
         let user = new User({
@@ -29,8 +30,10 @@ router.post("/signUp", (request, response) => {
                 name: data.name,
             });
 
+        console.log('userDetails -- ',userDetails);
         userDetails.save().then(() => {
             const token = jwt.sign({_id: user._id}, authKeys.jwtSecretKey);
+            console.log('token -- ',token);
             response.json({
                 token: token,
                 type: user.type,

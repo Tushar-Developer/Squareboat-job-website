@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passportChecker = require("./lib/passportChecker");
 
 //Connect to db
 mongoose.connect("mongodb://localhost:27017/squareboatJobDB", {
@@ -11,12 +12,13 @@ mongoose.connect("mongodb://localhost:27017/squareboatJobDB", {
 .catch((error) => console.log(error));
 
 const app = express();
-const portNo = 5000;
+const portNo = 4444;
 
 
 //using Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(passportChecker.initialize());
 
 //Routes
 app.use("/authorize", require("./routes/authorizeRoutes"));

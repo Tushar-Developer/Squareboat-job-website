@@ -173,3 +173,5 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
 
     })
 });
+
+module.exports = router;

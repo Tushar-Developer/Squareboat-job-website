@@ -20,7 +20,7 @@ app.use(express.json());
 
 //Routes
 app.use("/authorize", require("./routes/authorizeRoutes"));
-// app.use("/api", require("./routes/apiRoutes")); for all differernt routed after login.
+app.use("/api", require("./routes/apiRoutes")); //for all differernt routed after login.
 
 app.listen(portNo, () => {
     console.log('Server running on Port: ',portNo);

@@ -46,7 +46,6 @@ const JobTile = (props) => {
     const [openUpdate, setOpenUpdate] = useState(false);
     const [jobDetails, setJobDetails] = useState(job);
   
-    console.log(jobDetails);
   
     const handleClick = (location) => {
       history.push(location);
@@ -61,7 +60,6 @@ const JobTile = (props) => {
     };
   
     const handleDelete = () => {
-      console.log(job._id);
       axios
         .delete(`${apiList.jobs}/${job._id}`, {
           headers: {
@@ -73,7 +71,6 @@ const JobTile = (props) => {
           handleClose();
         })
         .catch((error) => {
-          console.log(error.response);
           handleClose();
         });
     };
@@ -89,7 +86,6 @@ const JobTile = (props) => {
           handleCloseUpdate();
         })
         .catch((error) => {
-          console.log(error.response);
           handleCloseUpdate();
         });
     };
@@ -103,6 +99,7 @@ const JobTile = (props) => {
             </Grid>
             <Grid item>Role : {job.jobType}</Grid>
             <Grid item>Salary : &#8377; {job.salary} per month</Grid>
+            <Grid item>Description : {job.description} </Grid>
           </Grid>
           <Grid item container direction="column" xs={3}>
             <Grid item xs>
@@ -115,124 +112,8 @@ const JobTile = (props) => {
                 View Applications
               </Button>
             </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                className={classes.statusBlock}
-                onClick={() => {
-                  setOpenUpdate(true);
-                }}
-                style={{
-                  background: "#FC7A1E",
-                  color: "#fff",
-                }}
-              >
-                Update Details
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.statusBlock}
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                Delete Job
-              </Button>
-            </Grid>
           </Grid>
         </Grid>
-        <Modal open={open} onClose={handleClose} className={classes.popupDialog}>
-          <Paper
-            style={{
-              padding: "20px",
-              outline: "none",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              minWidth: "30%",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h4" style={{ marginBottom: "10px" }}>
-              Are you sure?
-            </Typography>
-            <Grid container justify="center" spacing={5}>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  style={{ padding: "10px 50px" }}
-                  onClick={() => handleDelete()}
-                >
-                  Delete
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ padding: "10px 50px" }}
-                  onClick={() => handleClose()}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Modal>
-        <Modal
-          open={openUpdate}
-          onClose={handleCloseUpdate}
-          className={classes.popupDialog}
-        >
-          <Paper
-            style={{
-              padding: "20px",
-              outline: "none",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              minWidth: "30%",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h4" style={{ marginBottom: "10px" }}>
-              Update Details
-            </Typography>
-            <Grid
-              container
-              direction="column"
-              spacing={3}
-              style={{ margin: "10px" }}
-            >
-            </Grid>
-            <Grid container justify="center" spacing={5}>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  style={{ padding: "10px 50px" }}
-                  onClick={() => handleJobUpdate()}
-                >
-                  Update
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ padding: "10px 50px" }}
-                  onClick={() => handleCloseUpdate()}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Modal>
       </Paper>
     );
   };
@@ -248,6 +129,7 @@ const JobTile = (props) => {
         wfh: false,
       },
       salary: [0, 100],
+      description: ""
     });
   
     useEffect(() => {
@@ -261,23 +143,19 @@ const JobTile = (props) => {
       }
 
       const queryString = searchParams.join("&");
-      console.log(queryString);
       let address = apiList.jobs;
       if (queryString !== "") {
         address = `${address}?${queryString}`;
       }
   
-      console.log(address);
       axios.get(address, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }).then((response) => {
-          console.log(response.data);
           setJobs(response.data);
         })
         .catch((error) => {
-          console.log(error.response.data);
         });
     };
   

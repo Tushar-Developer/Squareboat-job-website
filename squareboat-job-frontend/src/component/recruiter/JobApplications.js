@@ -66,7 +66,6 @@ const ApplicationTile = (props) => {
           getData();
         })
         .catch((error) => {
-          console.log(error.response);
         });
     };
   
@@ -241,23 +240,18 @@ const ApplicationTile = (props) => {
 
       // searchParams = [...searchOptions];
       const queryString = searchParams.join("&");
-      console.log(queryString);
       let address = `${apiList.applicants}?jobId=${jobId}`;
       if (queryString !== "") {
         address = `${address}&${queryString}`;
       }
-  
-      console.log(address);
-  
+    
       axios.get(address, {
             headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         }).then((response) => {
-          console.log(response.data);
           setApplications(response.data);
         }).catch((err) => {
-          console.log(err.response);
           setApplications([]);
         });
     };

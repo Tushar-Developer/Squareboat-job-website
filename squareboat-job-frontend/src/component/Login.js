@@ -60,6 +60,10 @@ const Login = (props) => {
         });
     }
 
+    const refreshPage = () => {
+        window.location.reload();
+      }
+
     const handleLogin = () => {
 
         const verified = !Object.keys(inputErrorHandler).some((obj) => {
@@ -72,9 +76,8 @@ const Login = (props) => {
                 localStorage.setItem("type", response.data.type);
 
                 setLoggedin(isAuth());
-                console.log('log in response -- ',response);
+                refreshPage();
             }).catch((error) => {
-                console.log('log in error response -- ',error.response);
             });
         }
 

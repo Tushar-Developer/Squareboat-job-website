@@ -29,6 +29,7 @@ router.post("/jobs", jwtAuth, (request, response) => {
         title: body.title,
         salary: body.salary,
         jobType: body.jobType,
+        description: body.description
     });
 
     jobInfo.save().then(() => {
@@ -41,26 +42,34 @@ router.post("/jobs", jwtAuth, (request, response) => {
 // fetch all jobs
 router.get("/jobs", jwtAuth, (request, response) => {
     let user = request.user;
-    let findJobs = {};
+    let findParams = {};
+    let sortParams = {};
 
     // to fetch jobs posted by a particular recruiter
     if (user.type === "recruiter" && request.query.myjobs) {
-        findJobs = {
-        ...findJobs,
+      findParams = {
+        ...findParams,
         userId: user._id,
         };
     }
 
     if (request.query.q) {
-        findJobs = {
-            ...findJobs,
+      findParams = {
+            ...findParams,
             title: {
                 $regex: new RegExp(request.query.q, "i"),
-            },
+            }
         };
     }
 
-    console.log('findJobs get --',findJobs);
+      // if (request.query.q) {
+      //   findParams = {
+      //         ...findParams,
+      //         description: {
+      //             $regex: new RegExp(request.query.q, "i"),
+      //         }
+      //     };
+      // }
 
     let arr = [
         {
@@ -72,7 +81,7 @@ router.get("/jobs", jwtAuth, (request, response) => {
         },
         },
         { $unwind: "$recruiter" },  //duplicate each document 1 on 1 element
-        { $match: findJobs }, //pass only those documents that match conds 
+        { $match: findParams }, //pass only those documents that match conds
     ];
 
     JobInfo.aggregate(arr).then((jobPosts) => {
@@ -84,7 +93,7 @@ router.get("/jobs", jwtAuth, (request, response) => {
         }
         response.json(jobPosts);
     }).catch((error) => {
-        response.status(400).json(err);
+        response.status(400).json(error);
     });
 });
 
@@ -124,7 +133,6 @@ router.get("/jobs/:id", jwtAuth, (request, response) => {
 // apply for a job
 router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
     const user = request.user;
-    console.log('user -- ',user)
     if (user.type != "applicant") {
         response.status(401).json({
           message: "Only Applicants can apply for a job",
@@ -141,7 +149,6 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
         $nin: ["accepted"],
         },
     }).then((appliedApplication) => {
-        console.log('appliedApplication -- ',appliedApplication);
 
         if (appliedApplication !== null) {
             response.status(400).json({
@@ -149,7 +156,6 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
             });
             return;
         }
-        console.log('passed');
         JobInfo.findOne({_id: jobId}).then((job) => {
             if (!job) {
                 response.status(404).json({
@@ -157,7 +163,6 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
                 });
                 return;
             }
-            console.log('job -- ',job);
             JobApplication.countDocuments({
                 jobId: jobId,
                 status: {
@@ -170,7 +175,6 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
                       $nin: ["rejected"],
                     },
                 }).then((myActiveApplicationCount) => {
-                    console.log('myActiveApplicationCount -- ',myActiveApplicationCount);
                     // if (myActiveApplicationCount > 0) {
                         JobApplication.countDocuments({
                             userId: user._id,
@@ -188,7 +192,6 @@ router.post("/jobs/:id/applications", jwtAuth, (request, response) => {
                                         message: "Applied Successfully."
                                     });
                                 }).catch((error) => {
-                                    console.log('error --' ,error);
                                     response.status(400).json(error);
                                 });
                             }
@@ -283,7 +286,6 @@ router.get("/applications", jwtAuth, (request, response) => {
             },
         }
     ]).then((applications) => {
-      console.log('applications -- ',applications);
         response.json(applications);
     })
     .catch((error) => {

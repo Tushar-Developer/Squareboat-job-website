@@ -39,7 +39,6 @@ const JobTile = (props) => {
       };
   
     const handleApply = () => {
-      console.log(job._id);
       axios.post(`${apiList.jobs}/${job._id}/applications`,
           {
             test: 'test1',
@@ -50,10 +49,8 @@ const JobTile = (props) => {
             },
           }
         ).then((response) => {
-            console.log(response);
             handleClose();
         }).catch((error) => {
-          console.log(error.response);
           handleClose();
         });
     };
@@ -66,6 +63,7 @@ const JobTile = (props) => {
               <Typography variant="h5">{job.title}</Typography>
             </Grid>
             <Grid item>Salary : &#8377; {job.salary} per month</Grid>
+            <Grid item>Description : {job.description}</Grid>
             <Grid item>Posted By : {job.recruiter.name}</Grid>
           </Grid>
 
@@ -95,13 +93,14 @@ const JobTile = (props) => {
               alignItems: "center",
             }}
           >
+            Are you sure you want to Apply?
             <Button
               variant="contained"
               color="primary"
               style={{ padding: "10px 50px" }}
               onClick={() => handleApply()}
             >
-              Submit
+              Apply
             </Button>
           </Paper>
         </Modal>
@@ -109,128 +108,9 @@ const JobTile = (props) => {
     );
 };
 
-// Filter op
-// const FilterPopup = (props) => {
-//     const classes = useStyles();
-//     const { open, handleClose, searchOptions, setSearchOptions, getData } = props;
-//     return (
-//       <Modal open={open} onClose={handleClose} className={classes.popupDialog}>
-//         <Paper
-//           style={{
-//             padding: "50px",
-//             outline: "none",
-//             minWidth: "50%",
-//           }}
-//         >
-//           <Grid container direction="column" alignItems="center" spacing={3}>
-//             <Grid container item alignItems="center">
-//               <Grid item xs={3}>
-//                 Salary
-//               </Grid>
-//               <Grid item xs={9}>
-//                 <Slider
-//                   valueLabelDisplay="auto"
-//                   valueLabelFormat={(value) => {
-//                     return value * (100000 / 100);
-//                   }}
-//                   marks={[
-//                     { value: 0, label: "0" },
-//                     { value: 100, label: "100000" },
-//                   ]}
-//                   value={searchOptions.salary}
-//                   onChange={(event, value) =>
-//                     setSearchOptions({
-//                       ...searchOptions,
-//                       salary: value,
-//                     })
-//                   }
-//                 />
-//               </Grid>
-//             </Grid>
-//             <Grid container item alignItems="center">
-//               <Grid item xs={3}>
-//                 Sort
-//               </Grid>
-//               <Grid item container direction="row" xs={9}>
-//                 <Grid
-//                   item
-//                   container
-//                   xs={4}
-//                   justify="space-around"
-//                   alignItems="center"
-//                   style={{ border: "1px solid #D1D1D1", borderRadius: "5px" }}
-//                 >
-//                   <Grid item>
-//                     <Checkbox
-//                       name="salary"
-//                       checked={searchOptions.sort.salary.status}
-//                       onChange={(event) =>
-//                         setSearchOptions({
-//                           ...searchOptions,
-//                           sort: {
-//                             ...searchOptions.sort,
-//                             salary: {
-//                               ...searchOptions.sort.salary,
-//                               status: event.target.checked,
-//                             },
-//                           },
-//                         })
-//                       }
-//                       id="salary"
-//                     />
-//                   </Grid>
-//                   <Grid item>
-//                     <label for="salary">
-//                       <Typography>Salary</Typography>
-//                     </label>
-//                   </Grid>
-//                   <Grid item>
-//                     <IconButton
-//                       disabled={!searchOptions.sort.salary.status}
-//                       onClick={() => {
-//                         setSearchOptions({
-//                           ...searchOptions,
-//                           sort: {
-//                             ...searchOptions.sort,
-//                             salary: {
-//                               ...searchOptions.sort.salary,
-//                               desc: !searchOptions.sort.salary.desc,
-//                             },
-//                           },
-//                         });
-//                       }}
-//                     >
-//                       {searchOptions.sort.salary.desc ? (
-//                         <ArrowDownwardIcon />
-//                       ) : (
-//                         <ArrowUpwardIcon />
-//                       )}
-//                     </IconButton>
-//                   </Grid>
-//                 </Grid>
-//               </Grid>
-//             </Grid>
-  
-//             <Grid item>
-//               <Button
-//                 variant="contained"
-//                 color="primary"
-//                 style={{ padding: "10px 50px" }}
-//                 onClick={() => getData()}
-//               >
-//                 Apply
-//               </Button>
-//             </Grid>
-//           </Grid>
-//         </Paper>
-//       </Modal>
-//     );
-//   };
-
 const Home = (props) => {
     const [jobs, setJobs] = useState([]);
     const [searchOptions, setSearchOptions] = useState({ query: "" });
-    console.log('jobs -- ',jobs);
 
     useEffect(() => {
       getData();
@@ -244,7 +124,6 @@ const Home = (props) => {
 
       searchParams = [...searchParams];
       const queryString = searchParams.join("&");
-      console.log(queryString);
       let address = apiList.jobs;
       if (queryString !== "") {
         address = `${address}?${queryString}`;
@@ -256,11 +135,9 @@ const Home = (props) => {
             },
         })
         .then((response) => {
-            console.log(response.data);
             setJobs(response.data);
         })
         .catch((error) => {
-            console.log(error.response.data);
         });
     };
   

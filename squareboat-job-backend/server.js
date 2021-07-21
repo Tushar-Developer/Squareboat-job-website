@@ -5,15 +5,13 @@ const bodyParser = require("body-parser");
 const passportChecker = require("./lib/passportChecker");
 
 //Connect to db
-mongoose.connect("mongodb://localhost:27017/squareboatJobDB", {
+mongoose.connect("mongodb+srv://tushar:qwerty1234@squareboat-job-website.hj1z6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then((response) => console.log("Database Connection Established."))
 .catch((error) => console.log(error));
 
 const app = express();
-const portNo = 4444;
-
 
 //using Middlewares
 app.use(cors());
@@ -24,6 +22,8 @@ app.use(passportChecker.initialize());
 app.use("/authorize", require("./routes/authorizeRoutes"));
 app.use("/api", require("./routes/apiRoutes")); //for all differernt routed after login.
 
-app.listen(portNo, () => {
-    console.log('Server running on Port: ',portNo);
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+    console.log('Server running on Port: ',port);
 });

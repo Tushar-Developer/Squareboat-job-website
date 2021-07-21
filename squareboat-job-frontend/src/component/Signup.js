@@ -95,15 +95,12 @@ const useStyles = makeStyles((theme) => ({
         });
 
         if (verified) {
-            axios.post(apiList.signup, signupDetails)
-            .then((response) => {
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("type", response.data.type);
-            setLoggedin(isAuth());
-            console.log(response);
-            })
-            .catch((error) => {
-            console.log(error.response);
+            axios.post(apiList.signup, signupDetails).then((response) => {
+              localStorage.setItem("token", response.data.token);
+              localStorage.setItem("type", response.data.type);
+              setLoggedin(isAuth());
+              window.location.reload();
+            }).catch((error) => {
             });
         }
         else {
@@ -136,18 +133,15 @@ const useStyles = makeStyles((theme) => ({
           return tmpErrorHandler[obj].error;
         });
     
-        console.log(updatedDetails);
     
         if (verified) {
           axios.post(apiList.signup, updatedDetails).then((response) => {
-            console.log('response --',response);
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("type", response.data.type);
               setLoggedin(isAuth());
-              console.log(response);
+              window.location.reload();
             })
             .catch((error) => {
-              console.log(error.response);
             });
         } 
         else {

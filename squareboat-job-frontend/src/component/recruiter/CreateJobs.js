@@ -26,6 +26,7 @@ const CreateJobs = (props) => {
       jobType: "Full Time",
       duration: 0,
       salary: 0,
+      description: ""
     });
   
     const handleInput = (key, value) => {
@@ -36,7 +37,6 @@ const CreateJobs = (props) => {
     };
   
     const handleUpdate = () => {
-      console.log(jobDetails);
       axios.post(apiList.jobs, jobDetails, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,10 +46,10 @@ const CreateJobs = (props) => {
             title: "",
             jobType: "Full Time",
             salary: 0,
+            description: ""
           });
         })
         .catch((error) => {
-          console.log(error.response);
         });
     };
   
@@ -118,6 +118,19 @@ const CreateJobs = (props) => {
                       value={jobDetails.salary}
                       onChange={(event) => {
                         handleInput("salary", event.target.value);
+                      }}
+                      InputProps={{ inputProps: { min: 0 } }}
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      label="Description"
+                      type="string"
+                      variant="outlined"
+                      value={jobDetails.description}
+                      onChange={(event) => {
+                        handleInput("description", event.target.value);
                       }}
                       InputProps={{ inputProps: { min: 0 } }}
                       fullWidth

@@ -55,7 +55,6 @@ passport.use(
     },
     (jwtPayload, done) => {
         User.findById(jwtPayload._id).then((user) => {
-            console.log(Object.keys('jwtPayload-- ',jwtPayload));
             if (!user) {
                 return done(null, false, {
                     message: "JWT Token expired/not present",

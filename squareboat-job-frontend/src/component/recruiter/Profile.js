@@ -41,10 +41,8 @@ const Profile = (props) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         }).then((response) => {
-            console.log(response.data);
             setProfileDetails(response.data);
         }).catch((error) => {
-            console.log(error.response.data);
         });
     };
   

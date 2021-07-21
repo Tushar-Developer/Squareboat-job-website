@@ -50,6 +50,7 @@ const ApplicationTile = (props) => {
             </Grid>
             <Grid item>Posted By: {application.recruiter.name}</Grid>
             <Grid item>Salary : &#8377; {application.jobinfos.salary} per month</Grid>
+            <Grid item>Description : {application.jobinfos.description}</Grid>
           </Grid>
           <Grid item container direction="column" xs={3}>
             <Grid item xs>
@@ -82,11 +83,9 @@ const Applications = (props) => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }).then((response) => {
-          console.log(response.data);
           setApplications(response.data);
         })
         .catch((error) => {
-          console.log(error.response.data);
         });
     };
   

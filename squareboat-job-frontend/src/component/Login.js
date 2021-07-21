@@ -81,7 +81,7 @@ const Login = (props) => {
     };
 
     return loggedin ? (
-        <Redirect to="/" />
+        <Redirect to="/home" />
     )   :   (
         <Paper elevation={3} className={classes.body}>
             <Grid container direction="column" spacing={4} alignItems="center">

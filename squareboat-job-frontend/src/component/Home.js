@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Grid, IconButton, InputAdornment, makeStyles, Paper, TextField, Typography, Modal } from "@material-ui/core";
 import axios from "axios";
 import SearchIcon from "@material-ui/icons/Search";
@@ -42,16 +42,19 @@ const JobTile = (props) => {
       console.log(job._id);
       axios.post(`${apiList.jobs}/${job._id}/applications`,
           {
+            test: 'test1',
+          },
+          {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
-        )
-        .then((response) => {
+        ).then((response) => {
             console.log(response);
-        })
-        .catch((error) => {
+            handleClose();
+        }).catch((error) => {
           console.log(error.response);
+          handleClose();
         });
     };
     
@@ -71,8 +74,9 @@ const JobTile = (props) => {
               variant="contained"
               color="primary"
               className={classes.button}
-            //   onClick={() => {
-            //   }}
+              onClick={() => {
+                setOpen(true);
+              }}
               disabled={userType() === "recruiter"}
             >
               Apply
@@ -226,7 +230,12 @@ const JobTile = (props) => {
 const Home = (props) => {
     const [jobs, setJobs] = useState([]);
     const [searchOptions, setSearchOptions] = useState({ query: "" });
-  
+    console.log('jobs -- ',jobs);
+
+    useEffect(() => {
+      getData();
+    }, []);
+
     const getData = () => {
       let searchParams = [];
       if (searchOptions.query !== "") {
@@ -302,13 +311,7 @@ const Home = (props) => {
                 variant="outlined"
               />
             </Grid>
-            {/* <Grid item>
-              <IconButton onClick={() => setFilterOpen(true)}>
-                <FilterListIcon />
-              </IconButton>
-            </Grid> */}
           </Grid>
-  
           <Grid
             container
             item

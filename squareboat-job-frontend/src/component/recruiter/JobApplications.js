@@ -70,94 +70,94 @@ const ApplicationTile = (props) => {
         });
     };
   
-    const buttonSet = {
-      applied: (
-        <>
-          <Grid item xs>
-            <Button
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["shortlisted"],
-                color: "#ffffff",
-              }}
-              onClick={() => updateStatus("shortlisted")}
-            >
-              Shortlist
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Button
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["rejected"],
-                color: "#ffffff",
-              }}
-              onClick={() => updateStatus("rejected")}
-            >
-              Reject
-            </Button>
-          </Grid>
-        </>
-      ),
-      shortlisted: (
-        <>
-          <Grid item xs>
-            <Button
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["accepted"],
-                color: "#ffffff",
-              }}
-              onClick={() => updateStatus("accepted")}
-            >
-              Accept
-            </Button>
-          </Grid>
-          <Grid item xs>
-            <Button
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["rejected"],
-                color: "#ffffff",
-              }}
-              onClick={() => updateStatus("rejected")}
-            >
-              Reject
-            </Button>
-          </Grid>
-        </>
-      ),
-      rejected: (
-        <>
-          <Grid item xs>
-            <Paper
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["rejected"],
-                color: "#ffffff",
-              }}
-            >
-              Rejected
-            </Paper>
-          </Grid>
-        </>
-      ),
-      accepted: (
-        <>
-          <Grid item xs>
-            <Paper
-              className={classes.statusBlock}
-              style={{
-                background: colorSet["accepted"],
-                color: "#ffffff",
-              }}
-            >
-              Accepted
-            </Paper>
-          </Grid>
-        </>
-      ),
-    };
+    // const buttonSet = {
+    //   applied: (
+    //     <>
+    //       <Grid item xs>
+    //         <Button
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["shortlisted"],
+    //             color: "#ffffff",
+    //           }}
+    //           onClick={() => updateStatus("shortlisted")}
+    //         >
+    //           Shortlist
+    //         </Button>
+    //       </Grid>
+    //       <Grid item xs>
+    //         <Button
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["rejected"],
+    //             color: "#ffffff",
+    //           }}
+    //           onClick={() => updateStatus("rejected")}
+    //         >
+    //           Reject
+    //         </Button>
+    //       </Grid>
+    //     </>
+    //   ),
+    //   shortlisted: (
+    //     <>
+    //       <Grid item xs>
+    //         <Button
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["accepted"],
+    //             color: "#ffffff",
+    //           }}
+    //           onClick={() => updateStatus("accepted")}
+    //         >
+    //           Accept
+    //         </Button>
+    //       </Grid>
+    //       <Grid item xs>
+    //         <Button
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["rejected"],
+    //             color: "#ffffff",
+    //           }}
+    //           onClick={() => updateStatus("rejected")}
+    //         >
+    //           Reject
+    //         </Button>
+    //       </Grid>
+    //     </>
+    //   ),
+    //   rejected: (
+    //     <>
+    //       <Grid item xs>
+    //         <Paper
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["rejected"],
+    //             color: "#ffffff",
+    //           }}
+    //         >
+    //           Rejected
+    //         </Paper>
+    //       </Grid>
+    //     </>
+    //   ),
+    //   accepted: (
+    //     <>
+    //       <Grid item xs>
+    //         <Paper
+    //           className={classes.statusBlock}
+    //           style={{
+    //             background: colorSet["accepted"],
+    //             color: "#ffffff",
+    //           }}
+    //         >
+    //           Accepted
+    //         </Paper>
+    //       </Grid>
+    //     </>
+    //   ),
+    // };
   
     return (
       <Paper className={classes.jobTileOuter} elevation={3}>
@@ -181,7 +181,7 @@ const ApplicationTile = (props) => {
           </Grid>
           <Grid item container direction="column" xs={3}>
             <Grid item container xs>
-              {buttonSet[application.status]}
+              {/* {buttonSet[application.status]} */}
             </Grid>
           </Grid>
         </Grid>
@@ -239,7 +239,7 @@ const ApplicationTile = (props) => {
         searchParams = [...searchParams, `status=shortlisted`];
       }
 
-      searchParams = [...searchOptions];
+      // searchParams = [...searchOptions];
       const queryString = searchParams.join("&");
       console.log(queryString);
       let address = `${apiList.applicants}?jobId=${jobId}`;

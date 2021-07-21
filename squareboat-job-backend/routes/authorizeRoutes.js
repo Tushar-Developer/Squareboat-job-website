@@ -62,7 +62,9 @@ router.post("/login", (request, response, next) => {
             }
 
             if (!user) {
-                response.status(401).json(info);
+                response.status(401).json({
+                    message: "login failed.",
+                  });
                 return;
             }
 

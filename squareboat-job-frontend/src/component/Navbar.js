@@ -26,7 +26,7 @@ const Navbar = (props) => {
     };
 
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" style={{backgroundColor: '#131921', color: '#FFFFFF'}}>
             <Toolbar>
                 <Typography variant="h6" className={classes.title}>
                     Job Website
@@ -72,7 +72,8 @@ const Navbar = (props) => {
                                 Signup
                             </Button>
                         </>
-                    )}
+                    )
+                }
             </Toolbar>
         </AppBar>
     );

@@ -30,4 +30,4 @@ let schema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("jobInfo", schema);
+module.exports = mongoose.model("jobInfos", schema);

@@ -46,10 +46,10 @@ const ApplicationTile = (props) => {
         <Grid container>
           <Grid container item xs={9} spacing={1} direction="column">
             <Grid item>
-              <Typography variant="h5">{application.job.title}</Typography>
+              <Typography variant="h5">{application.jobinfos.title}</Typography>
             </Grid>
             <Grid item>Posted By: {application.recruiter.name}</Grid>
-            <Grid item>Salary : &#8377; {application.job.salary} per month</Grid>
+            <Grid item>Salary : &#8377; {application.jobinfos.salary} per month</Grid>
           </Grid>
           <Grid item container direction="column" xs={3}>
             <Grid item xs>

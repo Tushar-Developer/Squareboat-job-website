@@ -26,4 +26,4 @@ let schema = new mongoose.Schema({
     },
 });
 
-module.exports = module.exports = mongoose.model("jobApplication", schema);
+module.exports = mongoose.model("jobApplication", schema);
